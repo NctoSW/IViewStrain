@@ -1,0 +1,2 @@
+# IViewStrain
+ПО визуализации Strain
