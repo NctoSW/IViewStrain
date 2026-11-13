@@ -1,0 +1,46 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Ncto.Luk.iViewDB;component/Resources/Resources.en-US.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <system:String x:Key="VSstr_AddRun">Add run</system:String>
+    
+    <system:String x:Key="VSstr_ChangeDatabaseStructure">Change the database structure</system:String>
+    <system:String x:Key="VSstr_ChangeLanguage">Change language</system:String>
+    <system:String x:Key="VSstr_CloseProgram">Close the program</system:String>
+    <system:String x:Key="VSstr_Continue">Continue</system:String>
+
+    <system:String x:Key="VSstr_Database">Database</system:String>
+    <system:String x:Key="VSstr_DeleteDF">Delete data file</system:String>
+    <system:String x:Key="VSstr_DeleteRun">Delete run</system:String>
+    <system:String x:Key="VSstr_DownloadInspectionFromDatabase">Download inspection (from database)</system:String>
+
+    <system:String x:Key="VSstr_Error">Error</system:String>
+    
+    <system:String x:Key="VSstr_IMUFile">IMU file</system:String>
+    <system:String x:Key="VSstr_Inspection">Inspection</system:String>
+    <system:String x:Key="VSstr_IViewDataProjectFile">IViewData project file</system:String>
+    <system:String x:Key="VSstr_IViewDataProjectFileEXT">IViewData project file (.ivdproj)</system:String>
+
+    <system:String x:Key="VSstr_LoadDatabase">Load database</system:String>
+    
+    <system:String x:Key="VSstr_MasterRun">Master run</system:String>
+    <system:String x:Key="VSstr_ModifyingData">- Modifying data</system:String>
+
+    <system:String x:Key="VSstr_OpenFile">Open file</system:String>
+
+    <system:String x:Key="VSstr_ProjectFile">Project file</system:String>
+    <system:String x:Key="VSstr_ProfileFile">Profile file</system:String>
+    <system:String x:Key="VSstr_PreviousRun">Previous run</system:String>
+
+    <system:String x:Key="VSstr_RecentlyUsed">Recently used ...</system:String>
+    <system:String x:Key="VSstr_ResumeLastStoppingPoint">- Resume from the last stopping point</system:String>
+
+    <system:String x:Key="VSstr_UploadDF">Upload data file</system:String>
+    <system:String x:Key="VSstr_UploadPF">Upload project file</system:String>
+    <system:String x:Key="VSstr_UserSettings">User settings</system:String>
+
+    <system:String x:Key="VSstr_ViewingData">- Viewing data</system:String>
+</ResourceDictionary>

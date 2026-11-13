@@ -3,9 +3,46 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Models\Resources\Add_32x32.png" />
+    <None Remove="Models\Resources\NctoLogo.png" />
+    <None Remove="Models\Resources\Upload_16x16.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Repository\Tables\Channels\" />
+    <Folder Include="View\ChartControls\" />
+    <Folder Include="View\SettingControls\" />
+    <Folder Include="View\ProjectControls\" />
+    <Folder Include="View\ViewWindows\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\IViewSync\Client\IViewSync.Client.csproj" />
+    <ProjectReference Include="..\..\IViewSync\Server\IViewSync.csproj" />
+    <ProjectReference Include="..\..\Ncto.Luk\Charts\Ncto.Luk.Charts.csproj" />
+    <ProjectReference Include="..\..\Ncto.Luk\Controls\Ncto.Luk.Controls.csproj" />
+    <ProjectReference Include="..\..\Ncto.Luk\DB\Ncto.Luk.DB.csproj" />
+    <ProjectReference Include="..\..\Ncto.Luk\Drawing\Ncto.Luk.Drawing.csproj" />
+    <ProjectReference Include="..\..\Ncto.Luk\iViewData\Ncto.Luk.iViewData.csproj" />
+    <ProjectReference Include="..\..\Ncto.Luk\iViewDBIDs\Ncto.Luk.iViewDBIDs.csproj" />
+    <ProjectReference Include="..\..\Ncto.Luk\iViewDB\Ncto.Luk.iViewDB.csproj" />
+    <ProjectReference Include="..\..\Ncto.Luk\PigData\Ncto.Luk.PigData.csproj" />
+    <ProjectReference Include="..\..\Ncto.Luk\Repair\Ncto.Luk.Repair.csproj" />
+    <ProjectReference Include="..\..\Ncto.Luk\Strength\Ncto.Luk.Strength.csproj" />
+    <ProjectReference Include="..\..\Ncto.Luk\Tools\Ncto.Luk.Tools.csproj" />
+    <ProjectReference Include="..\..\Ncto.Luk\UI\Ncto.Luk.UI.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Models\Resources\Add_32x32.png" />
+    <Resource Include="Models\Resources\NctoLogo.png" />
+    <Resource Include="Models\Resources\Upload_16x16.png" />
+  </ItemGroup>
 
 </Project>

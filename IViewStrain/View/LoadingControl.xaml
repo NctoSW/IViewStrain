@@ -1,0 +1,730 @@
+﻿<UserControl x:Class="IViewStrain.View.LoadingControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:control="clr-namespace:Ncto.Luk.Controls.WPF;assembly=Ncto.Luk.Controls"
+             xmlns:imu="clr-namespace:Ncto.Luk.PigData.Imu.Idat;assembly=Ncto.Luk.PigData"
+             xmlns:profile="clr-namespace:Ncto.Luk.PigData.Imu.Ndat;assembly=Ncto.Luk.PigData"
+             xmlns:ip="clr-namespace:IViewStrain.Models.Parameters"
+             mc:Ignorable="d"
+             d:Background="White">
+    <Grid SnapsToDevicePixels="True"
+          UseLayoutRounding="True">
+        <Image Source="{DynamicResource NctoLogo}"
+               Stretch="Uniform"
+               Opacity="0.05"
+               Margin="50"/>
+
+        <Grid HorizontalAlignment="Center"
+              VerticalAlignment="Center"
+              Background="Transparent">
+            <Border Padding="20,15,20,20"
+                    BorderThickness="2"
+                    CornerRadius="25"
+                    BorderBrush="Silver"
+                    Background="Transparent">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!--Панель с кнопками-->
+                    <StackPanel Grid.Row="0"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Right"
+                                Margin="0,0,0,10">
+                        <Button Background="Transparent"
+                                Margin="0,0,6,0"
+                                BorderThickness="0"
+                                ToolTip="{DynamicResource VSstr_ChangeLanguage}"
+                                Click="SwitchCulture_BtnClick"
+                                Padding="4">
+                            <Button.Content>
+                                <Image x:Name="Language_Image"
+                                       Source="{DynamicResource Flag_Ru_16x16}"
+                                       Stretch="None"/>
+                            </Button.Content>
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="20"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+
+                        <Button Background="Transparent"
+                                Margin="0,0,6,0"
+                                BorderThickness="0"
+                                ToolTip="{DynamicResource VSstr_ChangeDatabaseStructure}"
+                                Click="OpenDBSettingsWindow_BtnClick"
+                                Padding="4">
+                            <Button.Content>
+                                <Image Source="{DynamicResource Database_16x16}"
+                                       Stretch="None"/>
+                            </Button.Content>
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="20"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+
+                        <Button Background="Transparent"
+                                Margin="0,0,6,0"
+                                BorderThickness="0"
+                                ToolTip="{DynamicResource VSstr_UserSettings}"
+                                Click="OpenUserSettingsWindow_BtnClick"
+                                Padding="4">
+                            <Button.Content>
+                                <Image Source="{DynamicResource Settings_16x16}"
+                                       Stretch="None"/>
+                            </Button.Content>
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="20"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+
+                        <Button Background="Transparent"
+                                BorderThickness="0"
+                                ToolTip="{DynamicResource VSstr_CloseProgram}"
+                                Click="CloseProgram_BtnClick"
+                                Padding="4">
+                            <Button.Content>
+                                <Image Source="{DynamicResource Exit_16x16}"
+                                        Stretch="None"/>
+                            </Button.Content>
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="20"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                    </StackPanel>
+                    
+                   <!--Панель с выбором режима загрузки-->
+                    <StackPanel Grid.Row="1">
+                        <UniformGrid Columns="3">
+                            <!--Загрузить файл данных-->
+                            <Button x:Name="UploadDF_Button"
+                                    Padding="20,10"
+                                    Margin="0,0,40,0"
+                                    BorderBrush="Green"
+                                    Click="UploadDF_BtnClick">
+                                <Button.Content>
+                                    <StackPanel>
+                                        <TextBlock Text="{DynamicResource VSstr_UploadDF}"
+                                                   FontWeight="Bold"/>
+                                        <TextBlock Text="{DynamicResource VSstr_ViewingData}"
+                                                   FontStyle="Italic"/>
+                                    </StackPanel>
+                                </Button.Content>
+                                <Button.Background>
+                                    <SolidColorBrush Color="Green" Opacity="0.2"/>
+                                </Button.Background>
+                                <Button.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="20"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
+
+                            <!--Загрузить БД-->
+                            <Button x:Name="UploadDB_Button"
+                                    HorizontalAlignment="Stretch"
+                                    Padding="20,10"
+                                    Margin="0,0,40,0"
+                                    BorderBrush="Blue"
+                                    Click="UploadDB_BtnClick">
+                                <Button.Content>
+                                    <StackPanel>
+                                        <TextBlock Text="{DynamicResource VSstr_DownloadInspectionFromDatabase}"
+                                                   FontWeight="Bold"/>
+                                        <TextBlock Text="{DynamicResource VSstr_ViewingData}"
+                                                   FontStyle="Italic"/>
+                                        <TextBlock Text="{DynamicResource VSstr_ModifyingData}"
+                                                   FontStyle="Italic"/>
+                                    </StackPanel>
+                                </Button.Content>
+                                <Button.Background>
+                                    <SolidColorBrush Color="Blue" Opacity="0.2"/>
+                                </Button.Background>
+                                <Button.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="20"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
+
+                            <!--Загрузить файл -проект-->
+                            <Button x:Name="UploadPF_Button"
+                                    HorizontalAlignment="Stretch"
+                                    Padding="20,10"
+                                    Margin="0,0,40,0"
+                                    BorderBrush="Red"
+                                    Click="UploadPF_BtnClick">
+                                <Button.Content>
+                                    <StackPanel>
+                                        <TextBlock Text="{DynamicResource VSstr_UploadPF}"
+                                                   FontWeight="Bold"/>
+                                        <TextBlock Text="{DynamicResource VSstr_ViewingData}"
+                                                   FontStyle="Italic"/>
+                                        <TextBlock Text="{DynamicResource VSstr_ModifyingData}"
+                                                   FontStyle="Italic"/>
+                                        <TextBlock Text="{DynamicResource VSstr_ResumeLastStoppingPoint}"
+                                                   FontStyle="Italic"/>
+                                    </StackPanel>
+                                </Button.Content>
+                                <Button.Background>
+                                    <SolidColorBrush Color="Red" Opacity="0.2"/>
+                                </Button.Background>
+                                <Button.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="20"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
+                        </UniformGrid>
+                    </StackPanel>
+                    
+                    <!--Панель с последними проектами-->
+                    <control:Luk_RecentFiles x:Name="RecentFiles"
+                                             Grid.Row="2"
+                                             Title="{DynamicResource VSstr_RecentlyUsed}"
+                                             SelectionChanged="RecentlyUsed_RFSelectionChanged"/>
+                    
+                    <!--Доп панели - загрузки файлов данных-->
+                    <StackPanel x:Name="UploadDF_StackPanel"
+                                Grid.Row="2"
+                                Visibility="Collapsed"
+                                Margin="10,20"
+                                Orientation="Vertical"
+                                VerticalAlignment="Top"
+                                d:DataContext="{d:DesignInstance Type=ip:InitParameters, IsDesignTimeCreatable=False}">
+                        <!--MasterRun-->
+                        <GroupBox BorderBrush="Black"
+                                  Padding="5"
+                                  Margin="0,0,0,5">
+                            <GroupBox.Header>
+                                <TextBlock Text="{DynamicResource VSstr_MasterRun}"
+                                           FontWeight="ExtraBold"
+                                           FontSize="11"
+                                           Margin="4,0"/>
+                            </GroupBox.Header>
+
+                            <StackPanel Orientation="Vertical">
+                                <!--Файл профиля-->
+                                <TextBlock Text="{DynamicResource VSstr_ProfileFile}"
+                                           FontWeight="Bold"
+                                           Margin="0,0,0,5"/>
+                                <Grid Margin="0,0,0,5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="10"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <TextBox Text="{Binding ProfileDataPath}"
+                                             Grid.Column="0"
+                                             IsReadOnly="True"/>
+                                    
+                                    <StackPanel Orientation="Horizontal"
+                                                Grid.Column="2">
+                                        <Button Background="White"
+                                                Click="UploadFile_BtnClick"
+                                                Tag="{x:Static profile:NdatFile.DefaultExt}"
+                                                Margin="0,0,10,0"
+                                                ToolTip="{DynamicResource VSstr_UploadDF}">
+                                            <Image Source="{DynamicResource Upload_16x16}"
+                                                   Stretch="None"/>
+                                        </Button>
+
+                                        <Button Background="White"
+                                                Click="RemoveFile_BtnClick"
+                                                Tag="{x:Static profile:NdatFile.DefaultExt}"
+                                                ToolTip="{DynamicResource VSstr_DeleteDF}">
+                                            <Image Source="{DynamicResource Delete_16x16}"
+                                                   Stretch="None"/>
+                                        </Button>
+                                    </StackPanel>
+                                </Grid>
+                                
+                                <!--Файл IMU-->
+                                <TextBlock Text="{DynamicResource VSstr_IMUFile}"
+                                           FontWeight="Bold"
+                                           Margin="0,0,0,5"/>
+                                <Grid Margin="0,0,0,5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="10"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBox Text="{Binding ImuDataPath}"
+                                             Grid.Column="0"
+                                             IsReadOnly="True"/>
+
+                                    <StackPanel Orientation="Horizontal"
+                                                Grid.Column="2">
+                                        <Button Background="White"
+                                                Click="UploadFile_BtnClick"
+                                                Tag="{x:Static imu:IdatFile.DefaultExt}"
+                                                Margin="0,0,10,0"
+                                                ToolTip="{DynamicResource VSstr_UploadDF}">
+                                            <Image Source="{DynamicResource Upload_16x16}"
+                                                   Stretch="None"/>
+                                        </Button>
+
+                                        <Button Background="White"
+                                                Click="RemoveFile_BtnClick"
+                                                Tag="{x:Static imu:IdatFile.DefaultExt}"
+                                                ToolTip="{DynamicResource VSstr_DeleteDF}">
+                                            <Image Source="{DynamicResource Delete_16x16}"
+                                                   Stretch="None"/>
+                                        </Button>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                        </GroupBox>
+                        
+                        <!--PreviousRun-->
+                        <GroupBox BorderBrush="Black"
+                                  Padding="5,5,0,5"
+                                  Margin="0,0,0,10">
+                            <GroupBox.Header>
+                                <TextBlock Text="{DynamicResource VSstr_PreviousRun}"
+                                           FontWeight="ExtraBold"
+                                           FontSize="11"
+                                           Margin="4,0"/>
+                            </GroupBox.Header>
+
+                            <ScrollViewer HorizontalScrollBarVisibility="Hidden"
+                                          VerticalScrollBarVisibility="Auto"
+                                          MaxHeight="300">
+                                <StackPanel Orientation="Vertical">
+                                    <ItemsControl ItemsSource="{Binding PreviousRuns}"
+                                                  Margin="0,0,0,5">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border BorderBrush="Gray"
+                                                        CornerRadius="5"
+                                                        Padding="5"
+                                                        BorderThickness="1"
+                                                        Margin="0,0,0,5">
+                                                    <StackPanel Orientation="Vertical">
+                                                        <!--Удалить прогон-->
+                                                        <Button HorizontalAlignment="Right"
+                                                                Click="DeleteItem_BtnClick"
+                                                                BorderThickness="0"
+                                                                Padding="3"
+                                                                Background="Transparent"
+                                                                ToolTip="{DynamicResource VSstr_DeleteRun}">
+                                                            <Image Source="{DynamicResource Stop_16x16}"
+                                                                   Stretch="None"/>
+                                                            <Button.Resources>
+                                                                <Style TargetType="Border">
+                                                                    <Setter Property="CornerRadius" Value="20"/>
+                                                                </Style>
+                                                            </Button.Resources>
+                                                        </Button>
+                                                        
+                                                        <!--Файл профиля-->
+                                                        <TextBlock Text="{DynamicResource VSstr_ProfileFile}"
+                                                                   FontWeight="Bold"
+                                                                   Margin="0,0,0,5"/>
+                                                        <Grid Margin="0,0,0,5">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="10"/>
+                                                                <ColumnDefinition Width="auto"/>
+                                                            </Grid.ColumnDefinitions>
+
+                                                            <TextBox Text="{Binding ProfileDataPath}"
+                                                                     Grid.Column="0"
+                                                                     IsReadOnly="True"/>
+                                                            <StackPanel Orientation="Horizontal"
+                                                                        Grid.Column="2">
+                                                                <Button Background="White"
+                                                                        Click="UploadFile_BtnClick"
+                                                                        Tag="{x:Static profile:NdatFile.DefaultExt}"
+                                                                        Margin="0,0,10,0"
+                                                                        ToolTip="{DynamicResource VSstr_UploadDF}">
+                                                                    <Image Source="{DynamicResource Upload_16x16}"
+                                                                           Stretch="None"/>
+                                                                </Button>
+
+                                                                <Button Background="White"
+                                                                        Click="RemoveFile_BtnClick"
+                                                                        Tag="{x:Static profile:NdatFile.DefaultExt}"
+                                                                        ToolTip="{DynamicResource VSstr_DeleteDF}">
+                                                                    <Image Source="{DynamicResource Delete_16x16}"
+                                                                           Stretch="None"/>
+                                                                </Button>
+                                                            </StackPanel>
+                                                        </Grid>
+
+                                                        <!--Файл IMU-->
+                                                        <TextBlock Text="{DynamicResource VSstr_IMUFile}"
+                                                                   FontWeight="Bold"
+                                                                   Margin="0,0,0,5"/>
+                                                        <Grid Margin="0,0,0,5">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="10"/>
+                                                                <ColumnDefinition Width="auto"/>
+                                                            </Grid.ColumnDefinitions>
+
+                                                            <TextBox Text="{Binding ImuDataPath}"
+                                                                     Grid.Column="0"
+                                                                     IsReadOnly="True"/>
+                                                            <StackPanel Orientation="Horizontal"
+                                                                        Grid.Column="2">
+                                                                <Button Background="White"
+                                                                        Click="UploadFile_BtnClick"
+                                                                        Tag="{x:Static imu:IdatFile.DefaultExt}"
+                                                                        Margin="0,0,10,0"
+                                                                        ToolTip="{DynamicResource VSstr_UploadDF}">
+                                                                    <Image Source="{DynamicResource Upload_16x16}"
+                                                                           Stretch="None"/>
+                                                                </Button>
+
+                                                                <Button Background="White"
+                                                                        Click="RemoveFile_BtnClick"
+                                                                        Tag="{x:Static imu:IdatFile.DefaultExt}"
+                                                                        ToolTip="{DynamicResource VSstr_DeleteDF}">
+                                                                    <Image Source="{DynamicResource Delete_16x16}"
+                                                                           Stretch="None"/>
+                                                                </Button>
+                                                            </StackPanel>
+                                                        </Grid>
+                                                    </StackPanel>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+
+                                    <Button HorizontalAlignment="Center"
+                                            Width="40"
+                                            Height="40"
+                                            Background="White"
+                                            Click="AddItem_BtnClick"
+                                            ToolTip="{DynamicResource VSstr_AddRun}">
+                                        <Image Source="{DynamicResource Add_32x32}"
+                                               Stretch="None"/>
+                                        <Button.Resources>
+                                            <Style TargetType="Border">
+                                                <Setter Property="CornerRadius" Value="20"/>
+                                            </Style>
+                                        </Button.Resources>
+                                    </Button>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </GroupBox>
+
+                        <Grid VerticalAlignment="Top">
+                            <Button HorizontalAlignment="Left"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Click="BackUpload_BtnClick"
+                                    Padding="4">
+                                <Image Source="{DynamicResource ArrowLeft_24x24}"
+                                       Stretch="None"/>
+                                <Button.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="20"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
+
+                            <Button Content="{DynamicResource VSstr_Continue}"
+                                    FontWeight="Bold"
+                                    HorizontalAlignment="Center"
+                                    Padding="10,5"
+                                    Click="ContinueDF_BtnClick"/>
+                        </Grid>
+                    </StackPanel>
+
+                    <!--Доп панели - загрузки инспекции-->
+                    <StackPanel x:Name="UploadDB_StackPanel"
+                                Grid.Row="2"
+                                Visibility="Collapsed"
+                                Margin="10,20"
+                                Orientation="Vertical"
+                                VerticalAlignment="Top"
+                                d:DataContext="{d:DesignInstance Type=ip:InitParameters, IsDesignTimeCreatable=False}">
+                        <!--MasterRun-->
+                        <GroupBox BorderBrush="Black"
+                                  Padding="5"
+                                  Margin="0,0,0,5">
+                            <GroupBox.Header>
+                                <TextBlock Text="{DynamicResource VSstr_MasterRun}"
+                                           FontWeight="ExtraBold"
+                                           FontSize="11"
+                                           Margin="4,0"/>
+                            </GroupBox.Header>
+
+                            <StackPanel Orientation="Vertical">
+                                <!--База данных-->
+                                <TextBlock Text="{DynamicResource VSstr_Database}"
+                                           FontWeight="Bold"
+                                           Margin="0,0,0,5"/>
+                                <Grid Margin="0,0,0,5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="10"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBox Text="{Binding DbName}"
+                                             Grid.Column="0"
+                                             IsReadOnly="True"/>
+                                    <StackPanel Orientation="Horizontal"
+                                                Grid.Column="2">
+                                        <Button Background="White"
+                                                Click="LoadDB_BtnClick"
+                                                ToolTip="{DynamicResource VSstr_LoadDatabase}">
+                                            <Image Source="{DynamicResource Upload_16x16}"
+                                                   Stretch="None"/>
+                                        </Button>
+                                    </StackPanel>
+                                </Grid>
+
+                                <!--Выбор таблицы-->
+                                <TextBlock Text="{DynamicResource VSstr_Inspection}"
+                                           FontWeight="Bold"
+                                           Margin="0,0,0,5"/>
+                                <ComboBox ItemsSource="{Binding Inspections}"
+                                          SelectionChanged="SelectionTable_CBSelectionChanged"
+                                          DropDownOpened="DropDownOpened_CBDropOpened"
+                                          Margin="0,0,0,5">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Path=Caption}"
+                                                       Padding="2"/>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+
+                                <!--Файл-проект .ivdproj-->
+                                <TextBlock Text="{DynamicResource VSstr_IViewDataProjectFileEXT}"
+                                           FontWeight="Bold"
+                                           Margin="0,0,0,5"/>
+                                <Grid Margin="0,0,0,5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="10"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBox Text="{Binding IVDProjecFile}"
+                                             Grid.Column="0"
+                                             IsReadOnly="True"/>
+                                    <StackPanel Orientation="Horizontal"
+                                                Grid.Column="2">
+                                        <Button Background="White"
+                                                Click="LoadIvdPF_BtnClick"
+                                                ToolTip="{DynamicResource VSstr_UploadPF}">
+                                            <Image Source="{DynamicResource Upload_16x16}"
+                                                   Stretch="None"/>
+                                        </Button>
+                                    </StackPanel>
+                                </Grid>
+
+                                <!--Файл профиля-->
+                                <TextBlock Text="{DynamicResource VSstr_ProfileFile}"
+                                           FontWeight="Bold"
+                                           Margin="0,0,0,5"/>
+                                <TextBox Text="{Binding ProfileDataPath}"
+                                         Grid.Column="0"
+                                         IsReadOnly="True"
+                                         Margin="0,0,0,5"/>
+
+                                <!--Файл IMU-->
+                                <TextBlock Text="{DynamicResource VSstr_IMUFile}"
+                                           FontWeight="Bold"
+                                           Margin="0,0,0,5"/>
+                                <TextBox Text="{Binding ImuDataPath}"
+                                         Grid.Column="0"
+                                         IsReadOnly="True"
+                                         Margin="0,0,0,5"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <!--PreviousRun-->
+                        <GroupBox BorderBrush="Black"
+                                  Padding="5,5,0,5"
+                                  Margin="0,0,0,10">
+                            <GroupBox.Header>
+                                <TextBlock Text="{DynamicResource VSstr_PreviousRun}"
+                                           FontWeight="ExtraBold"
+                                           FontSize="11"
+                                           Margin="4,0"/>
+                            </GroupBox.Header>
+
+                            <ScrollViewer HorizontalScrollBarVisibility="Hidden"
+                                          VerticalScrollBarVisibility="Auto"
+                                          MaxHeight="450">
+                                <StackPanel Orientation="Vertical">
+                                    <ItemsControl ItemsSource="{Binding PreviousRuns}"
+                                                  Margin="0,0,0,5">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border BorderBrush="Gray"
+                                                        CornerRadius="5"
+                                                        Padding="5"
+                                                        BorderThickness="1"
+                                                        Margin="0,0,0,5">
+                                                    <StackPanel Orientation="Vertical">
+                                                        <!--Удалить прогон-->
+                                                        <Button HorizontalAlignment="Right"
+                                                                Click="DeleteItem_BtnClick"
+                                                                BorderThickness="0"
+                                                                Padding="3"
+                                                                Background="Transparent"
+                                                                ToolTip="{DynamicResource VSstr_DeleteRun}">
+                                                            <Image Source="{DynamicResource Stop_16x16}"
+                                                                   Stretch="None"/>
+                                                            <Button.Resources>
+                                                                <Style TargetType="Border">
+                                                                    <Setter Property="CornerRadius" Value="20"/>
+                                                                </Style>
+                                                            </Button.Resources>
+                                                        </Button>
+
+                                                        <!--База данных-->
+                                                        <TextBlock Text="{DynamicResource VSstr_Database}"
+                                                                   FontWeight="Bold"
+                                                                   Margin="0,0,0,5"/>
+                                                        <Grid Margin="0,0,0,5">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="10"/>
+                                                                <ColumnDefinition Width="auto"/>
+                                                            </Grid.ColumnDefinitions>
+
+                                                            <TextBox Text="{Binding DbName}"
+                                                                     Grid.Column="0"
+                                                                     IsReadOnly="True"/>
+                                                            <StackPanel Orientation="Horizontal"
+                                                                        Grid.Column="2">
+                                                                <Button Background="White"
+                                                                        Click="LoadDB_BtnClick"
+                                                                        ToolTip="{DynamicResource VSstr_LoadDatabase}">
+                                                                    <Image Source="{DynamicResource Upload_16x16}"
+                                                                           Stretch="None"/>
+                                                                </Button>
+                                                            </StackPanel>
+                                                        </Grid>
+
+                                                        <!--Выбор таблицы-->
+                                                        <TextBlock Text="{DynamicResource VSstr_Inspection}"
+                                                                   FontWeight="Bold"
+                                                                   Margin="0,0,0,5"/>
+                                                        <ComboBox ItemsSource="{Binding Inspections}"
+                                                                  SelectionChanged="SelectionTable_CBSelectionChanged"
+                                                                  DropDownOpened="DropDownOpened_CBDropOpened"
+                                                                  Margin="0,0,0,5">
+                                                            <ComboBox.ItemTemplate>
+                                                                <DataTemplate>
+                                                                    <TextBlock Text="{Binding Path=Caption}"
+                                                                               Padding="2"/>
+                                                                </DataTemplate>
+                                                            </ComboBox.ItemTemplate>
+                                                        </ComboBox>
+
+                                                        <!--Файл-проект .ivdproj-->
+                                                        <TextBlock Text="{DynamicResource VSstr_IViewDataProjectFileEXT}"
+                                                                   FontWeight="Bold"
+                                                                   Margin="0,0,0,5"/>
+                                                        <Grid Margin="0,0,0,5">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="10"/>
+                                                                <ColumnDefinition Width="auto"/>
+                                                            </Grid.ColumnDefinitions>
+
+                                                            <TextBox Text="{Binding IVDProjecFile}"
+                                                                     Grid.Column="0"
+                                                                     IsReadOnly="True"/>
+                                                            <StackPanel Orientation="Horizontal"
+                                                                        Grid.Column="2">
+                                                                <Button Background="White"
+                                                                        Click="LoadIvdPF_BtnClick"
+                                                                        ToolTip="{DynamicResource VSstr_UploadPF}">
+                                                                    <Image Source="{DynamicResource Upload_16x16}"
+                                                                           Stretch="None"/>
+                                                                </Button>
+                                                            </StackPanel>
+                                                        </Grid>
+
+                                                        <!--Файл профиля-->
+                                                        <TextBlock Text="{DynamicResource VSstr_ProfileFile}"
+                                                                   FontWeight="Bold"
+                                                                   Margin="0,0,0,5"/>
+                                                        <TextBox Text="{Binding ProfileDataPath}"
+                                                                 Grid.Column="0"
+                                                                 IsReadOnly="True"
+                                                                 Margin="0,0,0,5"/>
+
+                                                        <!--Файл IMU-->
+                                                        <TextBlock Text="{DynamicResource VSstr_IMUFile}"
+                                                                   FontWeight="Bold"
+                                                                   Margin="0,0,0,5"/>
+                                                        <TextBox Text="{Binding ImuDataPath}"
+                                                                 Grid.Column="0"
+                                                                 IsReadOnly="True"
+                                                                 Margin="0,0,0,5"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+
+                                    <Button HorizontalAlignment="Center"
+                                            Width="40"
+                                            Height="40"
+                                            Background="White"
+                                            Click="AddItem_BtnClick"
+                                            ToolTip="{DynamicResource VSstr_AddRun}">
+                                        <Image Source="{DynamicResource Add_32x32}"
+                                               Stretch="None"/>
+                                        <Button.Resources>
+                                            <Style TargetType="Border">
+                                                <Setter Property="CornerRadius" Value="20"/>
+                                            </Style>
+                                        </Button.Resources>
+                                    </Button>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </GroupBox>
+                        
+                        <Grid VerticalAlignment="Top">
+                            <Button HorizontalAlignment="Left"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Click="BackUpload_BtnClick"
+                                    Padding="4">
+                                <Image Source="{DynamicResource ArrowLeft_24x24}"
+                                       Stretch="None"/>
+                                <Button.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="20"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
+
+                            <Button Content="{DynamicResource VSstr_Continue}"
+                                    FontWeight="Bold"
+                                    HorizontalAlignment="Center"
+                                    Padding="10,5"
+                                    Click="ContinueDB_BtnClick"/>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

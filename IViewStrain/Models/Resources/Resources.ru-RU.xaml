@@ -1,0 +1,46 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Ncto.Luk.iViewDB;component/Resources/Resources.ru-RU.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <system:String x:Key="VSstr_AddRun">Добавить прогон</system:String>
+    
+    <system:String x:Key="VSstr_ChangeDatabaseStructure">Изменить структуру базы данных</system:String>
+    <system:String x:Key="VSstr_ChangeLanguage">Изменить язык</system:String>
+    <system:String x:Key="VSstr_CloseProgram">Закрыть программу</system:String>
+    <system:String x:Key="VSstr_Continue">Продолжить</system:String>
+
+    <system:String x:Key="VSstr_Database">База данных</system:String>
+    <system:String x:Key="VSstr_DeleteDF">Удалить файл данных</system:String>
+    <system:String x:Key="VSstr_DeleteRun">Удалить прогон</system:String>
+    <system:String x:Key="VSstr_DownloadInspectionFromDatabase">Загрузить инспекцию (из базы данных)</system:String>
+
+    <system:String x:Key="VSstr_Error">Ошибка</system:String>
+
+    <system:String x:Key="VSstr_IMUFile">Файл IMU</system:String>
+    <system:String x:Key="VSstr_Inspection">Инспекция</system:String>
+    <system:String x:Key="VSstr_IViewDataProjectFile">Файл-проект IViewData</system:String>
+    <system:String x:Key="VSstr_IViewDataProjectFileEXT">Файл-проект IViewData (.ivdproj)</system:String>
+    
+    <system:String x:Key="VSstr_LoadDatabase">Загрузить базу данных</system:String>
+    
+    <system:String x:Key="VSstr_MasterRun">Основной прогон</system:String>
+    <system:String x:Key="VSstr_ModifyingData">- Изменение данных</system:String>
+
+    <system:String x:Key="VSstr_OpenFile">Открыть файл</system:String>
+
+    <system:String x:Key="VSstr_ProjectFile">Файл-проект</system:String>
+    <system:String x:Key="VSstr_ProfileFile">Файл профиля</system:String>
+    <system:String x:Key="VSstr_PreviousRun">Предыдущий прогон</system:String>
+
+    <system:String x:Key="VSstr_RecentlyUsed">Недавно использовались ...</system:String>
+    <system:String x:Key="VSstr_ResumeLastStoppingPoint">- Возобновление с последнего места остановки</system:String>
+
+    <system:String x:Key="VSstr_UploadDF">Загрузить файл данных</system:String>
+    <system:String x:Key="VSstr_UploadPF">Загрузить файл-проект</system:String>
+    <system:String x:Key="VSstr_UserSettings">Настройки пользователя</system:String>
+
+    <system:String x:Key="VSstr_ViewingData">- Просмотр данных</system:String>
+</ResourceDictionary>
